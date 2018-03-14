@@ -1,0 +1,5 @@
+<h1>Currently Listed Companies</h1>
+<br />
+<% @companies.each do |company| %>
+  <h5><a href="/<%= company.name %>"> <%= company.name %> </a></h5>
+<%end%>
