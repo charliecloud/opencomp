@@ -72,8 +72,7 @@ get("/:company/:position") do
 	if @position
 		@salaries = Salary.all(:position_id => @position.id)
 	end
-	#Get the salaries
-	#@salaries = @companies[@company_name][@position]
+
 	erb :position_profile
 end
 
@@ -93,7 +92,6 @@ post("/addcompany") do
 			:is_duplicate => false
 	)
 	#check to see if the company exists
-	# add_key_value_to_hash(@companies, current_company, {})
 	company.save
 	redirect(URI.encode("/#{current_company_name}/addposition"))
 end
@@ -101,8 +99,7 @@ end
 post("/:company/addposition") do
 	current_position_name = params["position"]
 	current_company_name = params["company"]
-	# company = @companies[params["company"]]
-	# add_key_value_to_hash(company, current_position, {})
+
 	position = Position.new(
 		:name => current_position_name,
 		:created_at => Time.now,
@@ -139,9 +136,6 @@ post("/:company/:position/addsalary") do
 	end
 
 	salary.save
-	# company = @companies[params["company"]]
-	# position_hash = company[current_position]
 
-	# add_salary_or_increment(position_hash, salary)
 	redirect("/")
 end
