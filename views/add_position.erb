@@ -1,0 +1,20 @@
+<h1>Add Position at <a href=<%= URI.escape("/#{@company}") %>><%= @company %></a></h1>
+<br />
+<form id = "addPosition" method = "post" action = <%= URI.escape("/#{@company}/addposition")%>>
+	<div class = "form-group">
+		<!-- <label for = "position">Position</label> -->
+		<input type = "text" class = "form-control" name = "position" id = "position" placeholder = "Full position name">
+	</div>
+	<br />
+	<button type = "submit" class = "btn btn-primary">Submit</button>
+</form>
+
+<script>
+	$("#addPosition").validate({
+		rules: {
+			position: {
+				required: true
+			}
+		}
+	});
+</script>

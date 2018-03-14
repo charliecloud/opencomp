@@ -1,0 +1,13 @@
+<!-- <h1>The Open Compensation Project</h1> -->
+<div class="jumbotron">
+  <h1 class="display-4">The Open Compensation Project</h1>
+  <p class="lead"><b><i>Our mission is simple</i></b>: Even the playing field between employers and employees by having the largest collection of free compensation information on the web</p>
+  <hr class="my-4">
+  <h2>Popular Companies</h2>
+  <br/>
+  <% @companies.each do |company| %>
+    <h5><a href="/<%= company.name %>"> <%= company.name %> </a></h5>
+  <%end%>
+  <br />
+  <p class = "lead">Join the project by <a href="/addcompany">adding your current and past compensation information</a></p>
+</div>
