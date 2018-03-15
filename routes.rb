@@ -91,8 +91,9 @@ post("/addcompany") do
 			:created_at => Time.now,
 			:is_duplicate => false
 	)
-	#check to see if the company exists
-	company.save
+	#only create the company if it doesn't already exist
+  existing_company = Company.first(:name => current_company_name)
+	company.save unless existing_company
 	redirect(URI.encode("/#{current_company_name}/addposition"))
 end
 
@@ -100,13 +101,17 @@ post("/:company/addposition") do
 	current_position_name = params["position"]
 	current_company_name = params["company"]
 
+  current_company = Company.first(:name => current_company_name)
+
 	position = Position.new(
 		:name => current_position_name,
 		:created_at => Time.now,
 		:is_duplicate => false,
-		:company_id => Company.first(:name => current_company_name).id
+		:company_id => current_company.id
 	)
-	position.save
+  #only create the position if it doesn't already exist for this company
+  existing_position = Position.first(:name => current_position_name, :company_id => current_company.id)
+	position.save unless existing_position
 	redirect(URI.encode("/#{current_company_name}/#{current_position_name}/addsalary"))
 end
 
@@ -121,7 +126,6 @@ post("/:company/:position/addsalary") do
 
 	#check to see if a salary currently exists
 	salary = Salary.first(:name => salary_amount, :position_id => position.id)
-	puts salary
 
 	if salary && salary.id
 		salary.count += 1
