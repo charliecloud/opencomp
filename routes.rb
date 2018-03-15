@@ -141,5 +141,5 @@ post("/:company/:position/addsalary") do
 
 	salary.save
 
-	redirect("/")
+	redirect(URI.encode("/#{current_company_name}/#{current_position_name}"))
 end
