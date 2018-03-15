@@ -2,32 +2,32 @@ require 'sinatra'
 require 'dm-core'
 require 'dm-migrations'
 require 'dm-migrations/adapters/dm-mysql-adapter'
+require 'yaml'
 require_relative 'models/company'
 require_relative 'models/position'
 require_relative 'models/salary'
 
-DataMapper.setup(:default, 'mysql://root:sadcow210@localhost/opencomp')
+#read db info from config file
+dbinfo = YAML.load_file("dbconfig.yaml")
+
+if dbinfo
+  username = dbinfo['username']
+  password = dbinfo['password']
+  host = dbinfo['host']
+  database = dbinfo['database']
+end
+
+if username && password && host && database
+	#initialize the database connection
+	DataMapper.setup(:default, "mysql://#{username}:#{password}@#{host}/#{database}")
+else
+  raise "DB config file dnconfig.yaml does not contain all needed entries"
+end
+
 #init the tables
 DataMapper.finalize
-# DataMapper.auto_migrate!
+#update any db tables as needed
 DataMapper.auto_upgrade!
-
-
-# def add_key_value_to_hash(hash, key, value)
-# 	hash[key] = value unless hash.include?(key)
-# end
-#
-# def add_object_to_array(object, array)
-# 	array.push(object) unless array.include?(object)
-# end
-#
-# def add_salary_or_increment(hash, key)
-# 	if hash.include?(key)
-# 		hash[key] += 1
-# 	else
-# 		hash[key] = 1
-# 	end
-# end
 
 #get
 get("/") do
@@ -72,8 +72,7 @@ get("/:company/:position") do
 	if @position
 		@salaries = Salary.all(:position_id => @position.id)
 	end
-	#Get the salaries
-	#@salaries = @companies[@company_name][@position]
+
 	erb :position_profile
 end
 
@@ -93,7 +92,6 @@ post("/addcompany") do
 			:is_duplicate => false
 	)
 	#check to see if the company exists
-	# add_key_value_to_hash(@companies, current_company, {})
 	company.save
 	redirect(URI.encode("/#{current_company_name}/addposition"))
 end
@@ -101,8 +99,7 @@ end
 post("/:company/addposition") do
 	current_position_name = params["position"]
 	current_company_name = params["company"]
-	# company = @companies[params["company"]]
-	# add_key_value_to_hash(company, current_position, {})
+
 	position = Position.new(
 		:name => current_position_name,
 		:created_at => Time.now,
@@ -139,9 +136,6 @@ post("/:company/:position/addsalary") do
 	end
 
 	salary.save
-	# company = @companies[params["company"]]
-	# position_hash = company[current_position]
 
-	# add_salary_or_increment(position_hash, salary)
 	redirect("/")
 end
