@@ -1,4 +1,4 @@
-<h1>Add Salary for <a href=<%= URI.escape("/#{@company}/#{@position}")%>><%= @position %></a> at <a href=<%= URI.escape("/#{@company}")%>><%= @company %></a></h1>
+<h1>Add Salary for <a href=<%= URI.escape("/#{@company}/#{@position}")%>><%=h @position %></a> at <a href=<%= URI.escape("/#{@company}")%>><%=h @company %></a></h1>
 <br />
 <form id = "addSalary" method = "post" action = <%= URI.escape("/#{@company}/#{@position}/addsalary")%>>
 	<div class = "form-group">

@@ -1,9 +1,9 @@
 <% if @company %>
-  <h1>Positions at <%= @company.name %></h1>
+  <h1>Positions at <%=h @company.name %></h1>
   <br />
   <br />
   <% @company_positions.each do |position| %>
-    <h5><a href=<%= URI.escape("/#{@company.name}/#{position.name}") %>> <%= position.name %></a></h5>
+    <h5><a href=<%= URI.escape("/#{@company.name}/#{position.name}") %>> <%=h position.name %></a></h5>
     <% end %>
     <br />
     <br />
