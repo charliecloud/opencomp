@@ -25,6 +25,7 @@
 		minLength: 1
 	},
 	{
+	    display: 'name',
 			source: function (query, syncResults, asyncResults) {
 					$.get('/search-company?company=' + encodeURIComponent(query), function (data) {
 					    console.log(data);
