@@ -6,6 +6,7 @@ require 'yaml'
 require_relative 'models/company'
 require_relative 'models/position'
 require_relative 'models/salary'
+include ERB::Util
 
 #read db info from config file
 dbinfo = YAML.load_file("dbconfig.yaml")

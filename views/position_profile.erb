@@ -1,5 +1,5 @@
 <% if @position %>
-  <h1><%=h @position.name %> at <a href = <%= URI.escape("/@company.name") %>> <%=h @company.name %></a></h1>
+  <h1><%=h @position.name %> at <a href = <%= URI.escape("/#{@company.name}") %>> <%=h @company.name %></a></h1>
   <br />
   <h2>Reported Salaries</h2>
   <br />
