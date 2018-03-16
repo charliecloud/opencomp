@@ -38,9 +38,8 @@ get("/") do
 end
 
 get("/search-company") do
-  puts "CDC:Here"
-  companies = Company.all(:name.like => params["company"])
-  puts companies
+  company = Company.first(:name.like => params["company"])
+  company.to_json
 end
 
 get("/addcompany") do
