@@ -38,6 +38,8 @@ get("/") do
 end
 
 get("/search-company") do
+  puts "CDC:Here"
+  puts params
   Company.all(:name.like => params["company"])
 end
 
