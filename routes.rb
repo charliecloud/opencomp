@@ -46,8 +46,8 @@ get("/search-company") do
     puts company.to_json
 		companies_array.push(company.to_json)
   end
-	puts companies.to_json
-  companies.to_json
+	puts companies_array.to_json
+	companies_array.to_json
 end
 
 get("/addcompany") do
