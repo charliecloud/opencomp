@@ -31,7 +31,8 @@
 					    //Take the results and pull out the data we need into array
 							var companyNames = [];
 							for (var company in data) {
-							    companyNames.push(company.name)
+							    console.log(data[company]);
+							    companyNames.push(data[company].name)
 							}
 					    console.log(data);
 					    console.log(companyNames);
