@@ -70,6 +70,7 @@ minLength: 1
 				source: function (query, syncResults, asyncResults) {
 				    $.get('/search-company?company=' + encodeURIComponent(query), function (data) {
                 console.log(data["data"]);
+                console.log(typeof data);
                 console.log(data);
                 asyncResults(data.data);
 						})
