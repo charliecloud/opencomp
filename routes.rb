@@ -37,7 +37,7 @@ get("/") do
 	erb :index
 end
 
-#returns json results for searching for companies
+#returns json results for searching companies
 get("/search-company") do
   content_type :json
 
