@@ -66,10 +66,11 @@ minLength: 1
 //             console.log(data);
 //         });
 //     }
+				display: 'name',
 				source: function (query, syncResults, asyncResults) {
 				    $.get('/search-company?company=' + encodeURIComponent(query), function (data) {
-                asyncResults(data);
-                console.log(data)
+                console.log(data);
+                asyncResults(data.data);
 						})
 				}
 });
