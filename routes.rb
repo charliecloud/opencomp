@@ -43,9 +43,10 @@ get("/search-company") do
   companies = Company.all(:name.like => "%#{params["company"]}%")
   companies_array = []
   companies.each do |company|
+    puts company.to_json
 		companies_array.push(company.to_json)
   end
-	puts companies
+	puts companies.to_json
   companies.to_json
 end
 
