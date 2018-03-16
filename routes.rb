@@ -38,6 +38,7 @@ get("/") do
 end
 
 get("/search-company") do
+  content_type :json
   company = Company.first(:name.like => "%#{params["company"]}%")
   company.to_json
 end
