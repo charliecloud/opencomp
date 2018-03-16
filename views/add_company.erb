@@ -31,7 +31,8 @@
 					    //Take the results and pull out the data we need into array
 							var companyNames = [];
 							for (var company in data) {
-							    var curr = JSON.parse(company[data]);
+
+							    var curr = JSON.parse(data[company]);
 									console.log(curr);
 							    console.log(typeof curre);
 							    // console.log(typeof data);
