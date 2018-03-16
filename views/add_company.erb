@@ -2,7 +2,6 @@
 <br />
 <form id = "addCompany" method = "post" action = "/addcompany">
 	<div class = "form-group">
-		<!-- <label for = "company">Company Name</label> -->
 		<input type = "text" class = "form-control" name = "company" id = "company" placeholder = "Full company name">
 	</div>
 	<br />
@@ -16,5 +15,28 @@
 				required: true
 			}
 		}
+	});
+</script>
+
+<script>
+	$('#company').typeahead({
+		hint: true,
+		highlight: true,
+		minLength: 1
+	},
+	{
+			source: function (query, syncResults, asyncResults) {
+					$.get('/search-company?company=' + encodeURIComponent(query), function (data) {
+					    //Take the results and pull out the data we need into array
+							var companyNames = [];
+							for (var company in data) {
+									//Parse the string contained inside each index in array to JSON
+							    var curr = JSON.parse(data[company]);
+							    companyNames.push(curr.name)
+							}
+							//Pass the results to typeahead
+							asyncResults(companyNames);
+					})
+			}
 	});
 </script>

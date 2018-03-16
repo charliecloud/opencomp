@@ -37,6 +37,20 @@ get("/") do
 	erb :index
 end
 
+#returns json results for searching companies
+get("/search-company") do
+  content_type :json
+
+  companies = Company.all(:name.like => "%#{params["company"]}%")
+  companies_array = []
+
+  companies.each do |company|
+		companies_array.push(company.to_json)
+  end
+
+	companies_array.to_json
+end
+
 get("/addcompany") do
 	erb :add_company
 end
