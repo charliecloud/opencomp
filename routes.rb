@@ -38,8 +38,11 @@ get("/") do
 end
 
 get("/search-company") do
+  puts "company is"
+  puts params["company"]
   company = Company.first(:name.like => params["company"])
-  puts company
+  puts "returned company is"
+  puts company.name
   puts company.to_json
   company.to_json
 end
