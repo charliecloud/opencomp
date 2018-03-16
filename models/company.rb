@@ -11,13 +11,10 @@ class Company
 
   def to_json
     {
-        "json_class" => self.class.name,
-        "data" => {
-          "id" => @id,
-          "name" => @name,
-          "created_at" => @created_at.to_s,
-          "is_duplicate" => @is_duplicate.to_s,
-        }
+      "id" => @id,
+      "name" => @name,
+      "created_at" => @created_at.to_s,
+      "is_duplicate" => @is_duplicate.to_s,
     }.to_json
   end
 
