@@ -37,6 +37,7 @@ get("/") do
 	erb :index
 end
 
+#returns json results for searching for companies
 get("/search-company") do
   content_type :json
   company = Company.first(:name.like => "%#{params["company"]}%")
