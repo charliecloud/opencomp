@@ -45,7 +45,7 @@ get("/search-company") do
   companies.each do |company|
 		companies_array.push(company.to_json)
   end
-
+	puts companies
   companies.to_json
 end
 

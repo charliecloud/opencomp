@@ -27,6 +27,7 @@
 	{
 			source: function (query, syncResults, asyncResults) {
 					$.get('/search-company?company=' + encodeURIComponent(query), function (data) {
+					    console.log(data)
 							if (data && data.data && data.data.name) {
 									asyncResults([data.data.name]);
 							}
