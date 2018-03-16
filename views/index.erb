@@ -6,7 +6,7 @@
   <h2>Popular Companies</h2>
   <br/>
   <% @companies.each do |company| %>
-    <h5><a href=<%= URI.escape("/company.name") %>> <%=h company.name %> </a></h5>
+    <h5><a href=<%= URI.escape("/#{company.name}") %>> <%= h company.name %> </a></h5>
   <%end%>
   <br />
   <p class = "lead">Join the project by <a href="/addcompany">adding your current and past compensation information</a></p>
