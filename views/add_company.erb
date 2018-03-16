@@ -31,7 +31,9 @@
 					    //Take the results and pull out the data we need into array
 							var companyNames = [];
 							for (var company in data) {
+							    console.log(typeof data);
 							    console.log(data[company]);
+							    console.log(typeof data[company]);
 							    console.log(data[company].name);
 							    console.log(data[company].id);
 							    companyNames.push(data[company].id)
