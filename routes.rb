@@ -40,12 +40,14 @@ end
 #returns json results for searching for companies
 get("/search-company") do
   content_type :json
+
   companies = Company.all(:name.like => "%#{params["company"]}%")
   companies_array = []
+
   companies.each do |company|
-    puts company.to_json
 		companies_array.push(company.to_json)
   end
+
 	puts companies_array.to_json
 	companies_array.to_json
 end

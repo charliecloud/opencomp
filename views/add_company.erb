@@ -25,11 +25,17 @@
 		minLength: 1
 	},
 	{
-	    display: 'name',
+	    // display: 'name',
 			source: function (query, syncResults, asyncResults) {
 					$.get('/search-company?company=' + encodeURIComponent(query), function (data) {
+					    //Take the results and pull out the data we need into array
+							var companyNames = [];
+							for (var company in data) {
+							    companyNames.push(company.name)
+							}
 					    console.log(data);
-							asyncResults(data);
+					    console.log(companyNames);
+							asyncResults(companyNames);
 					})
 			}
 	});
