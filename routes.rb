@@ -48,7 +48,6 @@ get("/search-company") do
 		companies_array.push(company.to_json)
   end
 
-	puts companies_array.to_json
 	companies_array.to_json
 end
 

@@ -25,25 +25,16 @@
 		minLength: 1
 	},
 	{
-	    // display: 'name',
 			source: function (query, syncResults, asyncResults) {
 					$.get('/search-company?company=' + encodeURIComponent(query), function (data) {
 					    //Take the results and pull out the data we need into array
 							var companyNames = [];
 							for (var company in data) {
-
+									//Parse the string contained inside each index in array to JSON
 							    var curr = JSON.parse(data[company]);
-									console.log(curr);
-							    console.log(typeof curre);
-							    // console.log(typeof data);
-							    // console.log(data[company]);
-							    // console.log(typeof data[company]);
-							    // console.log(data[company].name);
-							    // console.log(data[company].id);
 							    companyNames.push(curr.name)
 							}
-					    // console.log(data);
-					    // console.log(companyNames);
+							//Pass the results to typeahead
 							asyncResults(companyNames);
 					})
 			}
