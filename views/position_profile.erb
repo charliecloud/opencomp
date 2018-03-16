@@ -1,11 +1,11 @@
 <% if @position %>
-  <h1><%= @position.name %> at <a href = "/<%= @company.name %>"> <%= @company.name %></a></h1>
+  <h1><%=h @position.name %> at <a href = <%= URI.escape("/@company.name") %>> <%=h @company.name %></a></h1>
   <br />
   <h2>Reported Salaries</h2>
   <br />
   <br />
   <% @salaries.each do |salary| %>
-    <h5><%= salary.name %> - <%= salary.count %> report(s)</h5>
+    <h5><%=h salary.name %> - <%=h salary.count %> report(s)</h5>
   <%end%>
   <br />
   <br />
