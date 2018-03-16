@@ -39,8 +39,6 @@ end
 
 get("/search-company") do
   company = Company.first(:name.like => "%#{params["company"]}%")
-  puts "returned company is"
-  puts company.to_json
   company.to_json
 end
 
