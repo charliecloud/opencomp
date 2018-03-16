@@ -63,6 +63,7 @@ name: 'states',
 source: substringMatcher(
     function(query, syncResults, asyncResults) {
         $.get('/search-company?q=' + encodeURIComponent(query), function (data) {
+            console.log("Calling function!");
             asyncResults(data);
             console.log(data);
         });
