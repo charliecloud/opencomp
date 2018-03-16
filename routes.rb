@@ -37,6 +37,10 @@ get("/") do
 	erb :index
 end
 
+get("/search-company") do
+  Company.all(:name.like => params["company"])
+end
+
 get("/addcompany") do
 	erb :add_company
 end
