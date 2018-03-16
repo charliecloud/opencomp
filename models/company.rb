@@ -13,10 +13,10 @@ class Company
     {
         "json_class" => self.class.name,
         "data" => {
-          "id" => :id,
-          "name" => :name,
-          "created_at" => :created_at,
-          "is_duplicate" => :is_duplicate,
+          "id" => @id,
+          "name" => @name,
+          "created_at" => @created_at,
+          "is_duplicate" => @is_duplicate,
         }
     }
   end
