@@ -59,14 +59,12 @@ highlight: true,
 minLength: 1
 },
 {
-name: 'states',
-source: substringMatcher(
-    function(query, syncResults, asyncResults) {
-        $.get('/search-company?q=' + encodeURIComponent(query), function (data) {
+source: function(query, syncResults, asyncResults) {
+        $.get('/search-company?company=' + encodeURIComponent(query), function (data) {
             console.log("Calling function!");
             asyncResults(data);
             console.log(data);
         });
-    })
+    }
 });
 </script>
