@@ -59,12 +59,15 @@ highlight: true,
 minLength: 1
 },
 {
-source: function(query, syncResults, asyncResults) {
-        $.get('/search-company?company=' + encodeURIComponent(query), function (data) {
-            console.log("Calling function!");
-            asyncResults(data);
-            console.log(data);
-        });
-    }
+// source: function(query, syncResults, asyncResults) {
+//         $.get('/search-company?company=' + encodeURIComponent(query), function (data) {
+//             console.log("Calling function!");
+//             asyncResults(data);
+//             console.log(data);
+//         });
+//     }
+				source: function (query, syncResults, asyncResults) {
+				    console.log("WOOOT!");
+				}
 });
 </script>
