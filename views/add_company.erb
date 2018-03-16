@@ -68,7 +68,7 @@ minLength: 1
 //     }
 				source: function (query, syncResults, asyncResults) {
 				    console.log("WOOOT!");
-				    $.get('/search-company', function (data) {
+				    $.get('/search-company?company=' + encodeURIComponent(query), function (data) {
 				        console.log(data);
 				        console.log("success!");
 						})
