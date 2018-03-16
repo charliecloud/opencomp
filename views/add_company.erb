@@ -68,6 +68,9 @@ minLength: 1
 //     }
 				source: function (query, syncResults, asyncResults) {
 				    console.log("WOOOT!");
+				    $.get('/search-company', function (data) {
+				        console.log("success!");
+						})
 				}
 });
 </script>
