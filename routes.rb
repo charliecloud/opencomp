@@ -39,8 +39,8 @@ end
 
 get("/search-company") do
   puts "CDC:Here"
-  puts params
-  Company.all(:name.like => params["company"])
+  companies = Company.all(:name.like => params["company"])
+  puts companies
 end
 
 get("/addcompany") do
