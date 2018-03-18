@@ -25,15 +25,21 @@ else
   raise "DB config file dnconfig.yaml does not contain all needed entries"
 end
 
-#init the tables
+#check the DB models
 DataMapper.finalize
 #update any db tables as needed
 DataMapper.auto_upgrade!
 
 #get
 get("/") do
-	#get all of the Companies
-	@companies = Company.all
+  @title = "Home"
+  #Get the latest updated companies using the most recently added salaries
+  @companies = repository(:default).adapter.select('select distinct c.id, c.name, s.updated_at from companies c join positions p on
+  p.company_id =  c.id join salaries s on
+  s.position_id = p.id
+  order by s.updated_at desc
+  limit 10;')
+  
 	erb :index
 end
 
@@ -52,21 +58,25 @@ get("/search-company") do
 end
 
 get("/addcompany") do
+  @title = "Add Company"
 	erb :add_company
 end
 
 get("/companies") do
+  @title = "Companies"
 	@companies = Company.all
 	erb :companies
 end
 
 get("/:company/addposition") do
 	@company = params["company"]
+  @title = "Add Position to #{@company}"
 	erb :add_position
 end
 
 get("/:company") do
 	company_name = params["company"]
+  @title = company_name
 	@company = Company.first(:name => company_name)
 	if @company
 		@company_positions = Position.all(:company_id => @company.id)
@@ -77,7 +87,7 @@ end
 get("/:company/:position") do
 	company_name = params["company"]
 	position_name = params["position"]
-
+  @title = "#{position_name} at #{company_name}"
 	@company = Company.first(:name => company_name)
 
 	if @company
@@ -94,6 +104,7 @@ end
 get ("/:company/:position/addsalary") do
 	@company = params["company"]
 	@position = params["position"]
+  @title = "Add salary for #{@position} at #{@company}"
 	erb :add_salary
 end
 
@@ -144,12 +155,14 @@ post("/:company/:position/addsalary") do
 
 	if salary && salary.id
 		salary.count += 1
+    salary.updated_at = Time.now
 		salary.save
 	else
 		salary = Salary.new(
 			:name => salary_amount,
 			:count => 1,
 			:created_at => Time.now,
+      :updated_at => Time.now,
 			:position_id => position.id
 		)
 	end

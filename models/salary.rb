@@ -5,6 +5,7 @@ class Salary
   property :name, String
   property :count, Integer
   property :created_at, DateTime
+  property :updated_at, DateTime
 
   belongs_to :position
 end

@@ -3,7 +3,7 @@
   <h1 class="display-4">The Open Compensation Project</h1>
   <p class="lead"><b><i>Our mission is simple</i></b>: Even the playing field between employers and employees by having the largest collection of free compensation information on the web</p>
   <hr class="my-4">
-  <h2>Popular Companies</h2>
+  <h2>Recently Updated</h2>
   <br/>
   <% @companies.each do |company| %>
     <h5><a href=<%= URI.escape("/#{company.name}") %>> <%= h company.name %> </a></h5>
