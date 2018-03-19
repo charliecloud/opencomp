@@ -28,7 +28,7 @@
         },
         {
             source: function (query, syncResults, asyncResults) {
-                $.get('/search-company?position=' + encodeURIComponent(query) + '?company=' + encodeURIComponent($('#company').val()), function (data) {
+                $.get('/search-position?position=' + encodeURIComponent(query) + '?company=' + encodeURIComponent($('#company').val()), function (data) {
                     //Take the results and pull out the data we need into array
                     var positionNames = [];
                     for (var position in data) {
