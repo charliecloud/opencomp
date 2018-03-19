@@ -30,14 +30,14 @@
             source: function (query, syncResults, asyncResults) {
                 $.get('/search-company?position=' + encodeURIComponent(query) + '?company=' + encodeURIComponent($('#company').val()), function (data) {
                     //Take the results and pull out the data we need into array
-                    var companyNames = [];
-                    for (var company in data) {
+                    var positionNames = [];
+                    for (var position in data) {
                         //Parse the string contained inside each index in array to JSON
-                        var curr = JSON.parse(data[company]);
-                        companyNames.push(curr.name)
+                        var curr = JSON.parse(data[position]);
+                        positionNames.push(curr.name)
                     }
                     //Pass the results to typeahead
-                    asyncResults(companyNames);
+                    asyncResults(positionNames);
                 })
             }
         });
