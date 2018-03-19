@@ -62,14 +62,9 @@ get("/search-position") do
 	content_type :json
   company_name = params["company"]
   position_name = params["position"]
-  puts "position is" + position_name
-  puts "company is" + company_name
 
-	companies = Company.first(:name.like => "%#{company_name}%")
-  puts "Company is" + companies.name
+	companies = Company.first(:name => "#{company_name}")
   positions = Position.all(:company_id => companies.id, :name.like => "%#{position_name}%")
-  puts "Positions found"
-  puts positions.length
 
   positions_array = []
 	positions.each do |position|
