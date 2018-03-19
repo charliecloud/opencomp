@@ -2,7 +2,7 @@
 <br />
 <form id = "addPosition" method = "post" action = <%= URI.escape("/#{@company}/addposition")%>>
 	<div class = "form-group">
-		<!-- <label for = "position">Position</label> -->
+		<input type="hidden" id="company" name="company" value="<%= @company %>">
 		<input type = "text" class = "form-control" name = "position" id = "position" placeholder = "Full position name">
 	</div>
 	<br />
@@ -18,4 +18,27 @@
 			}
 		}
 	});
+</script>
+
+<script>
+    $('#position').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+        },
+        {
+            source: function (query, syncResults, asyncResults) {
+                $.get('/search-company?position=' + encodeURIComponent(query) + '?company=' + encodeURIComponent($('#company').val()), function (data) {
+                    //Take the results and pull out the data we need into array
+                    var companyNames = [];
+                    for (var company in data) {
+                        //Parse the string contained inside each index in array to JSON
+                        var curr = JSON.parse(data[company]);
+                        companyNames.push(curr.name)
+                    }
+                    //Pass the results to typeahead
+                    asyncResults(companyNames);
+                })
+            }
+        });
 </script>

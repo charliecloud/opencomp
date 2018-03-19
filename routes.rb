@@ -57,6 +57,23 @@ get("/search-company") do
 	companies_array.to_json
 end
 
+#returns json results for searching positions
+get("/search-position") do
+	content_type :json
+  company_name = params["company"]
+  position_name = params["position"]
+
+	companies = Company.first(:name.like => "%#{company_name}%")
+  positions = Position.all(:company_id => companies.id, :name.like => "%#{position_name}")
+
+  positions_array = []
+	positions.each do |position|
+		positions_array.push(position.to_json)
+	end
+
+	positions_array.to_json
+end
+
 get("/addcompany") do
   @title = "Add Company"
 	erb :add_company
