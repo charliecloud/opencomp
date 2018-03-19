@@ -64,7 +64,7 @@ get("/search-position") do
   position_name = params["position"]
 
 	companies = Company.first(:name.like => "%#{company_name}%")
-  puts "Company is" + companies
+  puts "Company is" + companies.name
   positions = Position.all(:company_id => companies.id, :name.like => "%#{position_name}")
   puts "Positions found" + positions
 
