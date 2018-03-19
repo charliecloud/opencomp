@@ -63,6 +63,7 @@ get("/search-position") do
   company_name = params["company"]
   position_name = params["position"]
   puts "position is" + position_name
+  puts "company is" + company_name
 
 	companies = Company.first(:name.like => "%#{company_name}%")
   puts "Company is" + companies.name
