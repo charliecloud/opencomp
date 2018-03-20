@@ -1,11 +1,16 @@
+require 'rubygems'
+require 'bundler/setup'
+
 require 'sinatra'
 require 'dm-core'
 require 'dm-migrations'
 require 'dm-migrations/adapters/dm-mysql-adapter'
 require 'yaml'
+
 require_relative 'models/company'
 require_relative 'models/position'
 require_relative 'models/salary'
+
 include ERB::Util
 
 #read db info from config file
