@@ -37,6 +37,7 @@ get("/") do
   @companies = repository(:default).adapter.select('select distinct c.id, c.name, s.updated_at from companies c join positions p on
   p.company_id =  c.id join salaries s on
   s.position_id = p.id
+	where c.deleted = false
   order by s.updated_at desc
   limit 10;')
   
@@ -47,7 +48,7 @@ end
 get("/search-company") do
   content_type :json
 
-  companies = Company.all(:name.like => "%#{params["company"]}%")
+  companies = Company.all(:name.like => "%#{params["company"]}%", :deleted => false)
   companies_array = []
 
   companies.each do |company|
@@ -63,7 +64,7 @@ get("/search-position") do
   company_name = params["company"]
   position_name = params["position"]
 
-	companies = Company.first(:name => "#{company_name}")
+	companies = Company.first(:name => "#{company_name}", :deleted => false)
   positions = Position.all(:company_id => companies.id, :name.like => "%#{position_name}%")
 
   positions_array = []
@@ -81,7 +82,7 @@ end
 
 get("/companies") do
   @title = "Companies"
-	@companies = Company.all
+	@companies = Company.all(:deleted => false)
 	erb :companies
 end
 
@@ -94,7 +95,7 @@ end
 get("/:company") do
 	company_name = params["company"]
   @title = company_name
-	@company = Company.first(:name => company_name)
+	@company = Company.first(:name => company_name, :deleted => false)
 	if @company
 		@company_positions = Position.all(:company_id => @company.id)
 	end
@@ -105,7 +106,7 @@ get("/:company/:position") do
 	company_name = params["company"]
 	position_name = params["position"]
   @title = "#{position_name} at #{company_name}"
-	@company = Company.first(:name => company_name)
+	@company = Company.first(:name => company_name, :deleted => false)
 
 	if @company
 		@position = Position.first(:name => position_name, :company_id => @company.id)
@@ -135,7 +136,7 @@ post("/addcompany") do
 			:is_duplicate => false
 	)
 	#only create the company if it doesn't already exist
-  existing_company = Company.first(:name => current_company_name)
+  existing_company = Company.first(:name => current_company_name, :deleted => false)
 	company.save unless existing_company
 	redirect(URI.encode("/#{current_company_name}/addposition"))
 end
@@ -144,7 +145,7 @@ post("/:company/addposition") do
 	current_position_name = params["position"]
 	current_company_name = params["company"]
 
-  current_company = Company.first(:name => current_company_name)
+  current_company = Company.first(:name => current_company_name, :deleted => false)
 
 	position = Position.new(
 		:name => current_position_name,
@@ -164,7 +165,7 @@ post("/:company/:position/addsalary") do
 	salary_amount = params["salary"]
 
 	#get the current company and position objects
-	company = Company.first(:name => current_company_name)
+	company = Company.first(:name => current_company_name, :deleted => false)
 	position = Position.first(:name => current_position_name, :company_id => company.id)
 
 	#check to see if a salary currently exists
