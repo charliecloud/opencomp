@@ -1,7 +1,7 @@
 <!-- <h1>The Open Compensation Project</h1> -->
 <div class="jumbotron">
   <h1 class="display-4">The Open Compensation Project</h1>
-  <p class="lead"><b><i>Our mission is simple</i></b>: Even the playing field between employers and employees by having the largest collection of free compensation information on the web</p>
+  <p class = "lead">Join the project! <a href="/addcompany">Add your current and past compensation information</a></p>
   <hr class="my-4">
   <h2>Recently Updated</h2>
   <br/>
@@ -9,5 +9,7 @@
     <h5><a href=<%= URI.escape("/#{company.name}") %>> <%= h company.name %> </a></h5>
   <%end%>
   <br />
-  <p class = "lead">Join the project by <a href="/addcompany">adding your current and past compensation information</a></p>
+  <button type="button" class="btn btn-primary btn-lg btn-block">Join the movement!</button>
+  <br />
+  <p class="lead"><b><i>Our mission</i></b>: Even the playing field between employers and employees by having the largest collection of free compensation information on the web</p>
 </div>
