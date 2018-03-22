@@ -5,6 +5,7 @@ class Position
   property :name, String
   property :created_at, DateTime
   property :is_duplicate, Boolean
+  property :deleted, Boolean, :default => false
 
   belongs_to :company
   has n, :salarys

@@ -70,7 +70,7 @@ get("/search-position") do
   position_name = params["position"]
 
 	companies = Company.first(:name => "#{company_name}", :deleted => false)
-  positions = Position.all(:company_id => companies.id, :name.like => "%#{position_name}%")
+  positions = Position.all(:company_id => companies.id, :name.like => "%#{position_name}%", :deleted => false)
 
   positions_array = []
 	positions.each do |position|
@@ -102,7 +102,7 @@ get("/:company") do
   @title = company_name
 	@company = Company.first(:name => company_name, :deleted => false)
 	if @company
-		@company_positions = Position.all(:company_id => @company.id)
+		@company_positions = Position.all(:company_id => @company.id, :deleted => false)
 	end
 	erb :company_profile
 end
@@ -114,7 +114,7 @@ get("/:company/:position") do
 	@company = Company.first(:name => company_name, :deleted => false)
 
 	if @company
-		@position = Position.first(:name => position_name, :company_id => @company.id)
+		@position = Position.first(:name => position_name, :company_id => @company.id, :deleted => false)
 	end
 
 	if @position
@@ -171,7 +171,7 @@ post("/:company/:position/addsalary") do
 
 	#get the current company and position objects
 	company = Company.first(:name => current_company_name, :deleted => false)
-	position = Position.first(:name => current_position_name, :company_id => company.id)
+	position = Position.first(:name => current_position_name, :company_id => company.id, :deleted => false)
 
 	#check to see if a salary currently exists
 	salary = Salary.first(:name => salary_amount, :position_id => position.id)
