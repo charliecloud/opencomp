@@ -6,6 +6,7 @@ class Company
   property :name, String
   property :created_at, DateTime
   property :is_duplicate, Boolean
+  property :deleted, Boolean, :default => false
 
   has n, :positions
 
