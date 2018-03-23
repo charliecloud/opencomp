@@ -77,8 +77,26 @@ get("/search-position") do
 	positions.each do |position|
 		positions_array.push(position.to_json)
 	end
-	puts positions_array
+
 	positions_array.to_json
+end
+
+#returns json results for searching locations
+get("/search-location") do
+  content_type :json
+  location_name = params["location"]
+
+  if location_name
+    locations = Location.all(:name.like => "%#{location_name}%")
+
+  	locations_array = []
+  	locations.each do |location|
+    	locations_array.push(location.to_json)
+    end
+
+    return locations_array.to_json
+
+	end
 end
 
 get("/addcompany") do

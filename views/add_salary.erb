@@ -2,7 +2,6 @@
 <br />
 <form id = "addSalary" method = "post" action = <%= URI.escape("/#{@company}/#{@position}/addsalary")%>>
 	<div class = "form-group">
-		<!-- <label for = "salary">Salary</label> -->
 		<input type = "text" class = "form-control" name = "salary" id = "salary" placeholder = "Gross annual salary in USD, whole numbers">
 		<input type = "text" class = "form-control" name = "location" id = "location" placeholder = "Closest metro city where salary earned">
 	</div>
@@ -23,4 +22,27 @@
 			}
 		}
 	});
+</script>
+
+<script>
+    $('#location').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+        },
+        {
+            source: function (query, syncResults, asyncResults) {
+                $.get('/search-location?location=' + encodeURIComponent(query), function (data) {
+                    //Take the results and pull out the data we need into array
+                    var locations = [];
+                    for (var location in data) {
+                        //Parse the string contained inside each index in array to JSON
+                        var curr = JSON.parse(data[location]);
+                        locations.push(curr.name)
+                    }
+                    //Pass the results to typeahead
+                    asyncResults(locations);
+                })
+            }
+        });
 </script>

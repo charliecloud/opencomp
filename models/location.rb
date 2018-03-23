@@ -7,4 +7,13 @@ class Location
   property :deleted, Boolean, :default => false
 
   belongs_to :salary
+
+  def to_json
+    {
+        "id" => @id,
+        "name" => @name,
+        "created_at" => @created_at.to_s,
+        "deleted" => @deleted.to_s,
+    }.to_json
+  end
 end
