@@ -10,6 +10,7 @@ require 'yaml'
 require_relative 'models/company'
 require_relative 'models/position'
 require_relative 'models/salary'
+require_relative 'models/location'
 
 include ERB::Util
 
@@ -167,14 +168,17 @@ end
 post("/:company/:position/addsalary") do
 	current_position_name = params["position"]
 	current_company_name = params["company"]
+  current_location = params["location"]
+
 	salary_amount = params["salary"]
 
-	#get the current company and position objects
+	#get the current company, position, and location objects
 	company = Company.first(:name => current_company_name, :deleted => false)
 	position = Position.first(:name => current_position_name, :company_id => company.id, :deleted => false)
+  location = Location.first(:name => current_location)
 
 	#check to see if a salary currently exists
-	salary = Salary.first(:name => salary_amount, :position_id => position.id)
+	salary = Salary.first(:name => salary_amount, :position_id => position.id, :location_id => location.id)
 
 	if salary && salary.id
 		salary.count += 1
@@ -186,7 +190,8 @@ post("/:company/:position/addsalary") do
 			:count => 1,
 			:created_at => Time.now,
       :updated_at => Time.now,
-			:position_id => position.id
+			:position_id => position.id,
+      :location_id => location.id
 		)
 	end
 

@@ -4,6 +4,7 @@
 	<div class = "form-group">
 		<!-- <label for = "salary">Salary</label> -->
 		<input type = "text" class = "form-control" name = "salary" id = "salary" placeholder = "Gross annual salary in USD, whole numbers">
+		<input type = "text" class = "form-control" name = "location" id = "location" placeholder = "Closest metro city where salary earned">
 	</div>
 	<br />
 	<button type = "submit" class = "btn btn-primary">Submit</button>
@@ -15,6 +16,10 @@
 			salary: {
 				required: true,
 				digits: true
+			},
+			location: {
+				required: true,
+				alphanumericbasicpunc: true
 			}
 		}
 	});
