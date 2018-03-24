@@ -10,6 +10,7 @@ require 'yaml'
 require_relative 'models/company'
 require_relative 'models/position'
 require_relative 'models/salary'
+require_relative 'models/location'
 
 include ERB::Util
 
@@ -45,7 +46,7 @@ get("/") do
 	where c.deleted = false
   order by s.updated_at desc
   limit 10;')
-  
+
 	erb :index
 end
 
@@ -76,8 +77,27 @@ get("/search-position") do
 	positions.each do |position|
 		positions_array.push(position.to_json)
 	end
-	puts positions_array
+
 	positions_array.to_json
+end
+
+#returns json results for searching locations
+get("/search-location") do
+  content_type :json
+  location_name = params["location"]
+
+  if location_name
+    locations = Location.all(:name.like => "%#{location_name}%")
+  else
+    locations = Location.all()
+	end
+  
+  locations_array = []
+  locations.each do |location|
+    locations_array.push(location.to_json)
+  end
+
+  return locations_array.to_json
 end
 
 get("/addcompany") do
@@ -167,30 +187,36 @@ end
 post("/:company/:position/addsalary") do
 	current_position_name = params["position"]
 	current_company_name = params["company"]
+  current_location = params["location"]
+
 	salary_amount = params["salary"]
 
-	#get the current company and position objects
+	#get the current company, position, and location objects
 	company = Company.first(:name => current_company_name, :deleted => false)
 	position = Position.first(:name => current_position_name, :company_id => company.id, :deleted => false)
 
-	#check to see if a salary currently exists
-	salary = Salary.first(:name => salary_amount, :position_id => position.id)
+  if company && position
 
-	if salary && salary.id
-		salary.count += 1
-    salary.updated_at = Time.now
-		salary.save
-	else
-		salary = Salary.new(
-			:name => salary_amount,
-			:count => 1,
-			:created_at => Time.now,
-      :updated_at => Time.now,
-			:position_id => position.id
-		)
-	end
+	   #check to see if a salary currently exists
+	    salary = Salary.first(:name => salary_amount, :position_id => position.id, :location_id => current_location)
 
-	salary.save
+  	if salary && salary.id
+  		salary.count += 1
+      salary.updated_at = Time.now
+  		salary.save
+  	else
+  		salary = Salary.new(
+  			:name => salary_amount,
+  			:count => 1,
+  			:created_at => Time.now,
+        :updated_at => Time.now,
+  			:position_id => position.id,
+        :location_id => current_location
+  		)
+  	end
+
+  	salary.save
+  end
 
 	redirect(URI.encode("/#{current_company_name}/#{current_position_name}"))
 end

@@ -2,8 +2,10 @@
 <br />
 <form id = "addSalary" method = "post" action = <%= URI.escape("/#{@company}/#{@position}/addsalary")%>>
 	<div class = "form-group">
-		<!-- <label for = "salary">Salary</label> -->
 		<input type = "text" class = "form-control" name = "salary" id = "salary" placeholder = "Gross annual salary in USD, whole numbers">
+		<br />
+		<select class="selectpicker form-control" data-live-search="true" id="location" name="location">
+		</select>
 	</div>
 	<br />
 	<button type = "submit" class = "btn btn-primary">Submit</button>
@@ -18,4 +20,20 @@
 			}
 		}
 	});
+</script>
+
+<script>
+		var locations = [];
+
+		$.get('/search-location', function (data) {
+			var mySelect = $('#location');
+
+			$.each(data, function(val, text) {
+				parsed = JSON.parse(text)
+
+				mySelect.append(
+					$('<option></option>').val(parsed.id).html(parsed.name)
+				);
+			});
+		})
 </script>
