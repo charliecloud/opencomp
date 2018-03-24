@@ -3,7 +3,9 @@
 <form id = "addSalary" method = "post" action = <%= URI.escape("/#{@company}/#{@position}/addsalary")%>>
 	<div class = "form-group">
 		<input type = "text" class = "form-control" name = "salary" id = "salary" placeholder = "Gross annual salary in USD, whole numbers">
-		<input type = "text" class = "form-control" name = "location" id = "location" placeholder = "Closest metro city where salary earned">
+		<br />
+		<select class="selectpicker form-control" data-live-search="true" id="location" name="location">
+		</select>
 	</div>
 	<br />
 	<button type = "submit" class = "btn btn-primary">Submit</button>
@@ -15,34 +17,23 @@
 			salary: {
 				required: true,
 				digits: true
-			},
-			location: {
-				required: true,
-				alphanumericbasicpunc: true
 			}
 		}
 	});
 </script>
 
 <script>
-    $('#location').typeahead({
-            hint: true,
-            highlight: true,
-            minLength: 1
-        },
-        {
-            source: function (query, syncResults, asyncResults) {
-                $.get('/search-location?location=' + encodeURIComponent(query), function (data) {
-                    //Take the results and pull out the data we need into array
-                    var locations = [];
-                    for (var location in data) {
-                        //Parse the string contained inside each index in array to JSON
-                        var curr = JSON.parse(data[location]);
-                        locations.push(curr.name)
-                    }
-                    //Pass the results to typeahead
-                    asyncResults(locations);
-                })
-            }
-        });
+		var locations = [];
+
+		$.get('/search-location', function (data) {
+			var mySelect = $('#location');
+
+			$.each(data, function(val, text) {
+				parsed = JSON.parse(text)
+
+				mySelect.append(
+					$('<option></option>').val(parsed.id).html(parsed.name)
+				);
+			});
+		})
 </script>

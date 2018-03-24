@@ -6,8 +6,6 @@ class Location
   property :created_at, DateTime
   property :deleted, Boolean, :default => false
 
-  belongs_to :salary
-
   def to_json
     {
         "id" => @id,

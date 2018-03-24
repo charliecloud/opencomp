@@ -7,6 +7,6 @@ class Salary
   property :created_at, DateTime
   property :updated_at, DateTime
 
-  has 1, :location
+  belongs_to :location
   belongs_to :position
 end

@@ -46,7 +46,7 @@ get("/") do
 	where c.deleted = false
   order by s.updated_at desc
   limit 10;')
-  
+
 	erb :index
 end
 
@@ -88,15 +88,16 @@ get("/search-location") do
 
   if location_name
     locations = Location.all(:name.like => "%#{location_name}%")
-
-  	locations_array = []
-  	locations.each do |location|
-    	locations_array.push(location.to_json)
-    end
-
-    return locations_array.to_json
-
+  else
+    locations = Location.all()
 	end
+  
+  locations_array = []
+  locations.each do |location|
+    locations_array.push(location.to_json)
+  end
+
+  return locations_array.to_json
 end
 
 get("/addcompany") do
@@ -193,27 +194,29 @@ post("/:company/:position/addsalary") do
 	#get the current company, position, and location objects
 	company = Company.first(:name => current_company_name, :deleted => false)
 	position = Position.first(:name => current_position_name, :company_id => company.id, :deleted => false)
-  location = Location.first(:name => current_location)
 
-	#check to see if a salary currently exists
-	salary = Salary.first(:name => salary_amount, :position_id => position.id, :location_id => location.id)
+  if company && position
 
-	if salary && salary.id
-		salary.count += 1
-    salary.updated_at = Time.now
-		salary.save
-	else
-		salary = Salary.new(
-			:name => salary_amount,
-			:count => 1,
-			:created_at => Time.now,
-      :updated_at => Time.now,
-			:position_id => position.id,
-      :location_id => location.id
-		)
-	end
+	   #check to see if a salary currently exists
+	    salary = Salary.first(:name => salary_amount, :position_id => position.id, :location_id => current_location)
 
-	salary.save
+  	if salary && salary.id
+  		salary.count += 1
+      salary.updated_at = Time.now
+  		salary.save
+  	else
+  		salary = Salary.new(
+  			:name => salary_amount,
+  			:count => 1,
+  			:created_at => Time.now,
+        :updated_at => Time.now,
+  			:position_id => position.id,
+        :location_id => current_location
+  		)
+  	end
+
+  	salary.save
+  end
 
 	redirect(URI.encode("/#{current_company_name}/#{current_position_name}"))
 end
