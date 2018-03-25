@@ -12,17 +12,7 @@
 </form>
 
 <script>
-	$("#addSalary").validate({
-		rules: {
-			salary: {
-				required: true,
-				digits: true
-			}
-		}
-	});
-</script>
-
-<script>
+	$( document ).ready(function() {
 		var locations = [];
 
 		$.get('/search-location', function (data) {
@@ -35,5 +25,19 @@
 					$('<option></option>').val(parsed.id).html(parsed.city + ", " + parsed.state)
 				);
 			});
+
+			$(mySelect).selectpicker("refresh");
 		})
+	});
+</script>
+
+<script>
+	$("#addSalary").validate({
+		rules: {
+			salary: {
+				required: true,
+				digits: true
+			}
+		}
+	});
 </script>
