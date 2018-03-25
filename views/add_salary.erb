@@ -32,7 +32,7 @@
 				parsed = JSON.parse(text)
 
 				mySelect.append(
-					$('<option></option>').val(parsed.id).html(parsed.name)
+					$('<option></option>').val(parsed.id).html(parsed.city + ", " + parsed.state)
 				);
 			});
 		})
