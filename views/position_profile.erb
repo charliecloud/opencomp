@@ -1,15 +1,15 @@
 <% if @position %>
-  <h1><%=h @position.name %> at <a href = <%= URI.escape("/#{@company.name}") %>> <%=h @company.name %></a></h1>
-  <br />
-  <h2>Reported Salaries</h2>
+  <h1>Reported salaries for <%=h @position.name %> at <a href = <%= URI.escape("/#{@company.name}") %>> <%=h @company.name %></a></h1>
   <br />
   <br />
   <% @salaries.each do |salary| %>
-    <h5><%=h salary.name %> - <%=h salary.count %> report(s)</h5>
+    <h4><%=h salary.name %> - <%=h salary.count %> report(s)</h4>
   <%end%>
   <br />
   <br />
-  <a href = <%= URI.escape("/#{@company.name}/#{@position.name}/addsalary")%>>Add Salary</a>
+  <a href = <%= URI.escape("/#{@company.name}/#{@position.name}/addsalary")%>>
+    <button type="button" class="btn btn-primary btn-lg btn-block">Add a salary</button>
+  </a>
   <br />
   <br />
 <% end %>

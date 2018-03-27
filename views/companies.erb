@@ -1,5 +1,9 @@
 <h1>Currently Listed Companies</h1>
 <br />
 <% @companies.each do |company| %>
-  <h5><a href="/<%=h company.name %>"> <%=h company.name %> </a></h5>
+  <h4><a href="/<%=h company.name %>"> <%=h company.name %> </a></h4>
 <%end%>
+<br />
+<a href="/addcompany">
+  <button type="button" class="btn btn-primary btn-lg btn-block">Add a company</button>
+</a>
