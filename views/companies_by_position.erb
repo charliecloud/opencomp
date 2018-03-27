@@ -1,0 +1,11 @@
+<% if @position %>
+  <h1>All companies with position: <%=h @position.name %></h1>
+  <br />
+  <% @companies.each do |company| %>
+    <h4><a href="/<%=h company.name %>/<%=h @position.name %>"><%=h @position.name%> at <%=h company.name %> </a></h4>
+  <%end%>
+  <br />
+  <a href="/addcompany">
+    <button type="button" class="btn btn-primary btn-lg btn-block">Add a position</button>
+  </a>
+<% end %>

@@ -1,0 +1,9 @@
+<h1>Positions Across All Companies</h1>
+<br />
+<% @positions.each do |position| %>
+  <h4><a href=<%= URI.escape("/position/#{position}") %>> <%=h position %> </a></h4>
+<%end%>
+<br />
+<a href="/addcompany">
+  <button type="button" class="btn btn-primary btn-lg btn-block">Add a position</button>
+</a>

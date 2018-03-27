@@ -39,13 +39,17 @@ DataMapper.auto_upgrade!
 #get
 get("/") do
   @title = "Home"
-  #Get the latest updated companies using the most recently added salaries
-  @companies = repository(:default).adapter.select('select distinct c.id, c.name, s.updated_at from companies c join positions p on
-  p.company_id =  c.id join salaries s on
-  s.position_id = p.id
-	where c.deleted = false
-  order by s.updated_at desc
-  limit 10;')
+  #Get the latest updated positions using the most recently added salaries
+  @updates = repository(:default).adapter.select(
+  	'select distinct p.name as position_name, c.name as company_name, s.updated_at
+		from companies c join positions p
+		on p.company_id =  c.id
+		join salaries s
+		on s.position_id = p.id
+  	where c.deleted = false
+  	order by s.updated_at desc
+  	limit 10;'
+  )
 
 	erb :index
 end
@@ -109,6 +113,24 @@ get("/companies") do
   @title = "Companies"
 	@companies = Company.all(:deleted => false)
 	erb :companies
+end
+
+get("/positions") do
+  @title = "Positions"
+  #Get all of the distinct positions
+  @positions = repository(:default).adapter.select('SELECT DISTINCT name FROM positions WHERE deleted=0')
+  erb :positions
+end
+
+get("/position/:position") do
+  #First check to make sure it is a valid position
+  @position = Position.first(:name => params["position"])
+  if @position
+  	@title = "All companies with #{@position.name}"
+  	#Get all company names with this position
+ 		@companies = Company.all(Company.positions.name => @position.name)
+  end
+  erb :companies_by_position
 end
 
 get("/:company/addposition") do
@@ -200,7 +222,7 @@ post("/:company/:position/addsalary") do
 	   #check to see if a salary currently exists
 	    salary = Salary.first(:name => salary_amount, :position_id => position.id, :location_id => current_location)
 
-  	if salary && salary.id
+  	if salary&.id
   		salary.count += 1
       salary.updated_at = Time.now
   		salary.save
