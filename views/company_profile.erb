@@ -3,10 +3,12 @@
   <br />
   <br />
   <% @company_positions.each do |position| %>
-    <h5><a href=<%= URI.escape("/#{@company.name}/#{position.name}") %>> <%=h position.name %></a></h5>
-    <% end %>
-    <br />
-    <br />
-    <a href =<%=URI.escape("/#{@company.name}/addposition")%>>Add Position</a>
-    <br />
+    <h4><a href=<%= URI.escape("/#{@company.name}/#{position.name}") %>> <%=h position.name %></a></h4>
+  <% end %>
+  <br />
+  <br />
+  <a href=<%=URI.escape("/#{@company.name}/addposition")%>>
+    <button type="button" class="btn btn-primary btn-lg btn-block">Add position</button>
+  </a>
+  <br />
 <% end %>

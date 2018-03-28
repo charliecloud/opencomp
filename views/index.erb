@@ -1,16 +1,20 @@
-<!-- <h1>The Open Compensation Project</h1> -->
 <div class="jumbotron">
   <h1 class="display-4">The Open Compensation Project</h1>
-  <p class = "lead">Join the project! <a href="/addcompany">Add your compensation information</a></p>
+  <p class = "lead"><a href="/companies">Compare your salary</a> OR <a href="/addcompany">Add your compensation information</a></p>
   <hr class="my-4">
-  <h2>Recently Updated</h2>
+  <h2>Recently Updated Positions</h2>
   <br/>
-  <% @companies.each do |company| %>
-    <h5><a href=<%= URI.escape("/#{company.name}") %>> <%= h company.name %> </a></h5>
+  <% @updates.each do |update| %>
+    <h5><a href=<%= URI.escape("/#{update.company_name}/#{update.position_name}") %>> <%=h update.position_name %> at <%=h update.company_name %> </a></h5>
   <%end%>
   <br />
-  <p class="lead"><b><i>Our mission</i></b>: Even the playing field between employers and employees by having the largest collection of free compensation information on the web</p>
+  <p class="lead"><b><i>Our mission:</i></b> Even the playing field between employers and employees by having the largest collection of free compensation information on the web</p>
   <br />
-  <button type="button" onclick="location.href='/addcompany'" class="btn btn-primary btn-lg btn-block">Join the movement!</button>
-  <button type="button" onclick="location.href='/companies'" class="btn btn-secondary btn-lg btn-block">Compare your salary</button>
+  <a href="/addcompany">
+    <button type="button" class="btn btn-primary btn-lg btn-block">Join the movement!</button>
+  </a>
+  <br />
+  <a href="/companies">
+    <button type="button" class="btn btn-secondary btn-lg btn-block">Compare your salary</button>
+  </a>
 </div>

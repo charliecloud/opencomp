@@ -8,18 +8,16 @@
 		</select>
 	</div>
 	<br />
-	<button type = "submit" class = "btn btn-primary">Submit</button>
+	<button type = "submit" class = "btn btn-primary btn-lg btn-block">Submit</button>
 </form>
 
 <script>
 	$( document ).ready(function() {
-		var locations = [];
-
 		$.get('/search-location', function (data) {
 			var mySelect = $('#location');
 
 			$.each(data, function(val, text) {
-				parsed = JSON.parse(text)
+				parsed = JSON.parse(text);
 
 				mySelect.append(
 					$('<option></option>').val(parsed.id).html(parsed.city + ", " + parsed.state)
