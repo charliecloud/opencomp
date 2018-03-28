@@ -5,5 +5,6 @@ source "https://rubygems.org" do
   gem 'dm-core', '1.2.1'
   gem 'dm-migrations', '1.2.0'
   gem 'dm-mysql-adapter', '1.2.0'
+  gem 'dm-timestamps', '1.2.0'
 end
 
