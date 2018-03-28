@@ -7,10 +7,14 @@ require 'dm-migrations'
 require 'dm-migrations/adapters/dm-mysql-adapter'
 require 'yaml'
 
+require 'json'
+require 'dm-timestamps'
+
 require_relative 'models/company'
 require_relative 'models/position'
 require_relative 'models/salary'
 require_relative 'models/location'
+require_relative 'models/experience_level'
 
 include ERB::Util
 
@@ -102,6 +106,19 @@ get("/search-location") do
   end
 
   return locations_array.to_json
+end
+
+get("/search-experience") do
+	content_type :json
+
+	experiences = ExperienceLevel.all()
+
+	experiences_array = []
+	experiences.each do |experience|
+		experiences_array.push(experience.to_json)
+	end
+
+	return experiences_array.to_json
 end
 
 get("/addcompany") do
@@ -210,6 +227,7 @@ post("/:company/:position/addsalary") do
 	current_position_name = params["position"]
 	current_company_name = params["company"]
   current_location = params["location"]
+  current_experience = params["experience"]
 
 	salary_amount = params["salary"]
 
@@ -220,7 +238,7 @@ post("/:company/:position/addsalary") do
   if company && position
 
 	   #check to see if a salary currently exists
-	    salary = Salary.first(:name => salary_amount, :position_id => position.id, :location_id => current_location)
+	    salary = Salary.first(:name => salary_amount, :position_id => position.id, :location_id => current_location, :experience_level_id => current_experience)
 
   	if salary&.id
   		salary.count += 1
@@ -233,7 +251,8 @@ post("/:company/:position/addsalary") do
   			:created_at => Time.now,
         :updated_at => Time.now,
   			:position_id => position.id,
-        :location_id => current_location
+        :location_id => current_location,
+        :experience_level_id => current_experience
   		)
   	end
 

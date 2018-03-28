@@ -799,4 +799,4 @@ values
 (797,"Ceres","California",46714),
 (798,"Cedar Hill","Texas",46663),
 (799,"Mansfield","Ohio",46454),
-(800,"Binghamton","New York",46444)
+(800,"Binghamton","New York",46444);
