@@ -1,16 +1,20 @@
-class Salary
+class ExperienceLevel
   include DataMapper::Resource
 
   property :id, Serial
   property :name, String, :required => true
-  property :count, Integer, :default => 0
   property :created_at, DateTime
-  property :updated_at, DateTime
   property :is_duplicate, Boolean, :default => false
   property :deleted, Boolean, :default => false
 
-  belongs_to :location
-  belongs_to :position
-  belongs_to :experience_level
+  def to_json
+    {
+        "id" => @id,
+        "name" => @name,
+        "created_at" => @created_at.to_s,
+        "is_duplicate" => @is_duplicate.to_s,
+        "deleted" => @deleted.to_s
+    }.to_json
+  end
 
 end

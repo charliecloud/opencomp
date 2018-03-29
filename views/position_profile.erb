@@ -3,7 +3,9 @@
   <br />
   <br />
   <% @salaries.each do |salary| %>
-    <h4><%=h salary.name %> - <%=h salary.count %> report(s)</h4>
+    <% if salary && salary.name && salary.location && salary.location.city && salary.location.state && salary.experience_level %>
+      <h4><%=h salary.name %> - <%=h salary.location.city %>, <%=h salary.location.state %> - <%=h salary.experience_level.name %> - <%=h salary.count %> report(s)</h4>
+    <% end %>
   <%end%>
   <br />
   <br />

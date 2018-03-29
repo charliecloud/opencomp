@@ -2,10 +2,11 @@ class Location
   include DataMapper::Resource
 
   property :id, Serial
-  property :city, String
-  property :state, String
+  property :city, String, :required => true
+  property :state, String, :required => true
   property :population, Integer
   property :rank, Integer
+  property :is_duplicate, Boolean, :default => false
   property :created_at, DateTime
   property :deleted, Boolean, :default => false
 
