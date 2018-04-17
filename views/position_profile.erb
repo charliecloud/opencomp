@@ -2,11 +2,28 @@
   <h1>Reported salaries for <%=h @position.name %> at <a href = <%= URI.escape("/#{@company.name}") %>> <%=h @company.name %></a></h1>
   <br />
   <br />
-  <% @salaries.each do |salary| %>
-    <% if salary && salary.name && salary.location && salary.location.city && salary.location.state && salary.experience_level %>
-      <h4><%=h salary.name %> - <%=h salary.location.city %>, <%=h salary.location.state %> - <%=h salary.experience_level.name %> - <%=h salary.count %> report(s)</h4>
-    <% end %>
-  <%end%>
+  <table id="positions-table" class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Salary</th>
+        <th scope="col">Location</th>
+        <th scope="col">Years of Experience</th>
+        <th scope="col">Reported Salaries</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @salaries.each do |salary| %>
+        <% if salary && salary.name && salary.location && salary.location.city && salary.location.state && salary.experience_level %>
+            <tr>
+              <td><%= salary.name %></td>
+              <td><%=h salary.location.city %>, <%=h salary.location.state %></td>
+              <td><%=h salary.experience_level.name %></td>
+              <td><%=h salary.count %></td>
+            </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
   <br />
   <br />
   <a href = <%= URI.escape("/#{@company.name}/#{@position.name}/addsalary")%>>
@@ -14,4 +31,9 @@
   </a>
   <br />
   <br />
+  <script>
+      $(document).ready(function () {
+          $('#positions-table').DataTable();
+      });
+  </script>
 <% end %>
