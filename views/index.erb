@@ -1,14 +1,14 @@
 <div class="jumbotron">
   <h1 class="display-4">The Open Compensation Project</h1>
-  <p class = "lead"><a href="/companies">Compare your salary</a> OR <a href="/addcompany">Add your compensation information</a></p>
+  <p class = "lead"><a href="/companies">Compare to salaries at your company</a> OR <a href="/addcompany">Add your compensation information</a></p>
   <hr class="my-4">
-  <h2>Recently Updated Positions</h2>
+  <h2>Recently Added Salaries</h2>
   <br/>
   <% @updates.each do |update| %>
-    <h5><a href=<%= URI.escape("/#{update.company_name}/#{update.position_name}") %>> <%=h update.position_name %> at <%=h update.company_name %> </a></h5>
+    <h5><a href=<%= URI.escape("/#{update.position.company.name}/#{update.position.name}") %>><%= "$#{update.name} for #{update.position.name} at #{update.position.company.name}  "%></a></h5>
   <%end%>
   <br />
-  <p class="lead"><b><i>Our mission:</i></b> Even the playing field between employers and employees by having the largest collection of free compensation information on the web</p>
+  <p class="lead"><b><i>Our mission:</i></b> Level the playing field between employers and employees by having the largest collection of free compensation information on the web</p>
   <br />
   <a href="/addcompany">
     <button type="button" class="btn btn-primary btn-lg btn-block">Join the movement!</button>

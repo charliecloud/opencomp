@@ -1,16 +1,6 @@
 get("/") do
   @title = "Home"
-  #Get the latest updated positions using the most recently added salaries
-  @updates = repository(:default).adapter.select (
-    'select distinct p.name as position_name, c.name as company_name, s.updated_at
-		from companies c join positions p
-		on p.company_id =  c.id
-		join salaries s
-		on s.position_id = p.id
-  	where c.deleted = false
-  	order by s.updated_at desc
-  	limit 10;'
-  )
+  @updates = Salary.all(:deleted => false, :limit => 10)
 
   erb :index
 end

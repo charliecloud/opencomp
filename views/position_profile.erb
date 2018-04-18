@@ -9,6 +9,7 @@
         <th scope="col">Location</th>
         <th scope="col">Years of Experience</th>
         <th scope="col">Reported Salaries</th>
+        <th scope="col">Last Reported Date</th>
       </tr>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
               <td><%=h salary.location.city %>, <%=h salary.location.state %></td>
               <td><%=h salary.experience_level.name %></td>
               <td><%=h salary.count %></td>
+              <td><%=h salary.updated_at.strftime("%m-%d-%Y") %></td>
             </tr>
         <% end %>
       <% end %>
